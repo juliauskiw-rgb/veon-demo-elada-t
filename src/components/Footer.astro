@@ -1,0 +1,48 @@
+---
+import Logo from "./Logo.astro";
+import FutureLink from "./FutureLink.astro";
+import { FOOTER_COLS, PHONES, EMAIL, ADDRESS, FUTURE_NOTE } from "../data/site";
+---
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a href="#top" class="footer__logo" aria-label="ЕЛАДА-Т, на початок сторінки"><Logo /></a>
+      <p>Інженерні системи під ключ у Львові та області.</p>
+    </div>
+    {FOOTER_COLS.map((c) => (
+      <nav class="footer__col" aria-label={c.title}>
+        <p class="footer__h">{c.title}</p>
+        <ul>
+          {c.items.map((i) => <li><FutureLink note={FUTURE_NOTE}>{i}</FutureLink></li>)}
+        </ul>
+      </nav>
+    ))}
+    <div class="footer__col">
+      <p class="footer__h">Контакти</p>
+      <ul>
+        {PHONES.map((p) => <li><a href={p.href}>{p.display}</a></li>)}
+        <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
+        <li>{ADDRESS}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <span>© ПП «ЕЛАДА-Т»</span>
+    <FutureLink note={FUTURE_NOTE} class="footer__policy">Політика конфіденційності</FutureLink>
+  </div>
+</footer>
+<style>
+  .footer { background: var(--color-bg); padding: var(--s-7) 0 calc(var(--s-6) + 72px); border-top: 1px solid var(--color-line); font-size: 1rem; }
+  .footer__grid { display: grid; gap: var(--s-6); }
+  .footer__logo { display: inline-flex; text-decoration: none; margin-bottom: var(--s-3); }
+  .footer__brand p { margin: 0; max-width: 28ch; color: var(--color-muted); }
+  .footer__h { margin: 0 0 var(--s-3); font: 700 var(--fs-1) / 1.2 var(--font-display); }
+  .footer__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-1); }
+  .footer__col li, .footer__col :global(.future-link), .footer__col a { min-height: 32px; display: inline-flex; align-items: center; }
+  .footer__col a { color: var(--color-text); text-decoration: none; }
+  .footer__col a:hover { color: var(--color-cold); text-decoration: underline; }
+  .footer__col :global(.future-link) { color: var(--color-muted); }
+  .footer__bottom { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6); justify-content: space-between; margin-top: var(--s-7); padding-top: var(--s-5); border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: .9375rem; }
+  @media (min-width: 768px) { .footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .footer { padding-bottom: var(--s-6); } }
+  @media (min-width: 1100px) { .footer__grid { grid-template-columns: 1.3fr 1fr 1fr 1.3fr; gap: var(--gap); } }
+</style>

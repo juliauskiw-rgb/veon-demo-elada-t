@@ -1,0 +1,45 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Directions from "../components/Directions.astro";
+import Objects from "../components/Objects.astro";
+import Process from "../components/Process.astro";
+import Equipment from "../components/Equipment.astro";
+import Terms from "../components/Terms.astro";
+import Contacts from "../components/Contacts.astro";
+import CallBar from "../components/CallBar.astro";
+import Footer from "../components/Footer.astro";
+import { PHONES, EMAIL, FACEBOOK } from "../data/site";
+
+const title = "Монтаж опалення, котлів і теплових насосів у Львові — ЕЛАДА-Т";
+const description =
+  "Монтаж опалення, теплові насоси, вода і кондиціонування у Львові та області. Безкоштовні консультація і розрахунок. Понад 18 років.";
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "HVACBusiness",
+  name: "ЕЛАДА-Т",
+  alternateName: "ПП «ЕЛАДА-Т»",
+  description,
+  telephone: PHONES.map((p) => p.href.replace("tel:", "")),
+  email: EMAIL,
+  address: { "@type": "PostalAddress", streetAddress: "вул. Кирила і Мефодія, 21", addressLocality: "Львів", addressCountry: "UA" },
+  areaServed: [{ "@type": "City", name: "Львів" }, { "@type": "AdministrativeArea", name: "Львівська область" }],
+  sameAs: [FACEBOOK],
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <script slot="head" type="application/ld+json" data-rec="R-009" set:html={JSON.stringify(ld)} />
+  <Header slot="header" />
+  <Hero />
+  <Directions />
+  <Objects />
+  <Process />
+  <Equipment />
+  <Terms />
+  <Contacts />
+  <Fragment slot="footer">
+    <Footer />
+    <CallBar />
+  </Fragment>
+</Base>

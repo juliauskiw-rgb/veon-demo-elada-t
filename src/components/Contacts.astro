@@ -1,0 +1,38 @@
+---
+import Section from "./Section.astro";
+import Icon from "./Icon.astro";
+import { PHONES, PHONE, EMAIL, ADDRESS, MAP_URL, FACEBOOK } from "../data/site";
+---
+<Section id="kontakty" rec="R-004,R-008" class="block night contacts">
+  <div class="container">
+    <h2 class="contacts__title" data-reveal>Подзвоніть — розрахуємо безкоштовно</h2>
+    <p class="contacts__main"><a href={PHONE.href} data-rec="R-004">{PHONE.display}</a></p>
+    <div class="contacts__grid">
+      <ul class="contacts__list">
+        {PHONES.slice(1).map((p) => <li><a href={p.href}><Icon name="phone" size={20} /> {p.display}</a></li>)}
+        <li><a href={`mailto:${EMAIL}`}><Icon name="mail" size={20} /> {EMAIL}</a></li>
+      </ul>
+      <ul class="contacts__list">
+        <li class="contacts__addr" data-rec="R-004"><Icon name="pin" size={20} /> <span>{ADDRESS}</span></li>
+        <li><a href={MAP_URL} target="_blank" rel="noopener noreferrer" data-rec="R-004,SM-R007">Відкрити на карті<span class="visually-hidden"> (нова вкладка)</span></a></li>
+        <li><a href={FACEBOOK} target="_blank" rel="noopener noreferrer" data-rec="R-008,SM-R001"><Icon name="fb" size={20} /> Facebook<span class="visually-hidden"> (нова вкладка)</span></a></li>
+      </ul>
+    </div>
+  </div>
+</Section>
+<style>
+  :global(.night) { background: var(--color-night); color: var(--color-night-text); }
+  :global(.night :focus-visible) { outline-color: var(--color-night-focus); }
+  .contacts__title { margin: 0 0 var(--s-5); font: 700 var(--fs-3) / 1.1 var(--font-display); letter-spacing: -.02em; max-width: 20ch; }
+  .contacts__main { margin: 0 0 var(--s-6); }
+  .contacts__main a { display: inline-block; font-family: var(--font-display); font-weight: 700; font-style: oblique 10deg; font-size: clamp(1.875rem, 9.2vw, 2.125rem); line-height: 1.1; letter-spacing: -.02em; color: var(--color-night-text); text-decoration: none; border-bottom: 3px solid var(--color-night-text); padding-bottom: 4px; transition: transform var(--dur-fast); }
+  .contacts__main a:hover { border-color: var(--color-night-focus); }
+  .contacts__main a:active { transform: translateY(1px); }
+  .contacts__grid { display: grid; gap: var(--s-5); }
+  .contacts__list { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s-1); }
+  .contacts__list a, .contacts__addr { display: flex; align-items: center; gap: var(--s-3); min-height: 48px; color: var(--color-night-text); font-size: var(--fs-1); font-weight: 600; text-decoration: none; }
+  .contacts__list a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .contacts__list :global(.icon) { color: var(--color-night-muted); flex: none; }
+  @media (min-width: 768px) { .contacts__grid { grid-template-columns: 1fr 1fr; gap: var(--gap); } .contacts__title { font-size: var(--fs-4); } }
+  @media (min-width: 1100px) { .contacts__main a { font-size: 3.5rem; } }
+</style>

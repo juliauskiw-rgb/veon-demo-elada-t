@@ -1,0 +1,67 @@
+---
+import Section from "./Section.astro";
+import Icon from "./Icon.astro";
+import ObjectPhoto from "./ObjectPhoto.astro";
+import { PHONE } from "../data/site";
+---
+<Section id="top" rec="R-001,R-002,R-009" class="hero">
+  <div class="container hero__grid">
+    <h1 class="hero__title" data-rec="R-009"><span>Інженерні системи під ключ</span> <span>у Львові та області</span></h1>
+    <div class="hero__copy">
+      <p class="hero__lead">Опалення, теплові насоси, сонце, вода і клімат. Проєкт, обладнання, монтаж і сервіс — понад 18 років.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href={PHONE.href}><Icon name="phone" size={22} /> Подзвонити <span class="hero__num">{PHONE.display}</span></a>
+        <a class="hero__more" href="#napryamy">Обрати систему <Icon name="arrow" size={20} /></a>
+      </div>
+      <p class="hero__free">Консультація і розрахунок — безкоштовно</p>
+    </div>
+    <div class="hero__visual" aria-hidden="false">
+      <div class="stripe stripe--hot">
+        <ObjectPhoto slug="budynok-lviv" alt="Приватний будинок, Львів" variant="hero" eager sizes="(min-width: 1100px) 60vw, 100vw" />
+      </div>
+      <div class="stripe stripe--cold" aria-hidden="true"></div>
+    </div>
+  </div>
+</Section>
+<style>
+  :global(.hero) { padding-top: var(--s-6); overflow: clip; }
+  .hero__grid { display: grid; gap: var(--s-5); }
+  .hero__title { margin: 0; font: 700 var(--fs-display) / 1.08 var(--font-display); letter-spacing: -.02em; text-wrap: balance; }
+  .hero__lead { margin: 0 0 var(--s-5); font-size: var(--fs-0); max-width: 34em; }
+  .hero__actions { display: grid; gap: var(--s-4); justify-items: stretch; }
+  .hero__more { display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2); min-height: 48px; color: var(--color-cold); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+  .hero__more :global(.icon) { transition: transform var(--dur-mid) var(--ease-out); }
+  .hero__more:hover :global(.icon) { transform: translateX(4px); }
+  .hero__free { margin: var(--s-3) 0 0; font-weight: 600; }
+  .hero__num { white-space: nowrap; }
+
+  /* mobile: a ribbon of the two stripes under the buttons (photo in the red parallelogram) */
+  .hero__visual { --skew-px: 38px; position: relative; height: 120px; margin-top: var(--s-4); margin-right: calc(-1 * var(--space)); }
+  .stripe { position: absolute; top: 0; bottom: 0; clip-path: polygon(var(--skew-px) 0, 100% 0, calc(100% - var(--skew-px)) 100%, 0 100%); animation: stripe-in 500ms var(--ease-out) both; }
+  .stripe--hot { left: 0; width: 74%; background: var(--color-hot); overflow: hidden; }
+  .stripe--cold { left: calc(74% + 12px); right: 0; background: var(--color-cold); animation-delay: 120ms; }
+
+  @keyframes stripe-in { from { opacity: 0; transform: translateX(var(--shift, 24px)); } to { opacity: 1; transform: none; } }
+
+  @media (min-width: 768px) {
+    :global(.hero) { padding-top: var(--s-7); }
+    .hero__title span { display: block; }
+    .hero__actions { grid-template-columns: auto auto; justify-content: start; align-items: center; gap: var(--s-5); }
+    .hero__visual { --skew-px: 90px; height: 300px; }
+    .stripe--hot { width: 76%; }
+    .stripe--cold { left: calc(76% + 16px); }
+  }
+  @media (min-width: 1100px) {
+    :global(.hero) { padding-top: var(--s-8); padding-bottom: var(--s-6); }
+    .hero__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--s-6); align-items: start; }
+    .hero__title { grid-column: 1 / -1; }
+    .hero__copy { grid-column: 1 / span 5; padding-bottom: var(--s-7); }
+    .hero__lead { font-size: var(--fs-1); }
+    .hero__actions { grid-template-columns: none; justify-items: start; gap: var(--s-4); }
+    .hero__visual { --skew-px: 128px; --shift: 56px; grid-column: 6 / -1; height: 400px; margin-top: calc(-1 * var(--s-5)); animation: none; }
+    .stripe { animation-duration: 700ms; }
+    .stripe--hot { width: 78%; }
+    .stripe--cold { left: calc(78% + 20px); right: calc(-1 * max(var(--space), (100vw - var(--container)) / 2)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .stripe { animation: none; } }
+</style>

@@ -1,0 +1,48 @@
+/* Hallmark · theme: custom · idea: "червона і синя смуги знака — гаряча і холодна лінії, що проходять крізь будинок і сторінку" · vibe: "інженерно точно, світло, впізнавано по-львівськи" · paper #F3F4F1 · accent #B3202E / #2D5BB5 · faces Geologica / Golos Text · hero: повноширинний H1 зверху, дві скошені смуги знака з фото об'єкта знизу праворуч · nav: якорі + телефон праворуч · posture: full palette (2 ролі) · axes light/geometric-sans/chromatic-red */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, photos are placeholders until the client JPGs are dropped into public/img/objects/ (tile fallback keeps the layout) */
+/* Client design tokens, from design/concept.md only. */
+:root {
+  /* colour */
+  --color-bg: #F3F4F1;
+  --color-bg-2: #E7E9E4;
+  --color-text: #141C2E;
+  --color-muted: #4B5468;
+  --color-hot: #B3202E;
+  --color-hot-hover: #A01C29;
+  --color-hot-pressed: #8F1824;
+  --color-cold: #2D5BB5;
+  --color-accent: var(--color-cold);
+  --color-night: #0E1A33;
+  --color-night-text: #EEF1F6;
+  --color-night-muted: #A9B4C8;
+  --color-night-focus: #8FB0F2;
+  --color-line: rgba(20, 28, 46, .16);
+  --color-on-hot: #FFFDFC;
+
+  /* type */
+  --font-display: "Geologica Variable", "Geologica", system-ui, sans-serif;
+  --font-body: "Golos Text Variable", "Golos Text", system-ui, sans-serif;
+  --fs-0: 1.0625rem;   /* 17 */
+  --fs-1: 1.3125rem;   /* 21 */
+  --fs-2: 1.625rem;    /* 26 */
+  --fs-3: 2.0625rem;   /* 33 */
+  --fs-4: 2.625rem;    /* 42 */
+  --fs-display: clamp(2.5rem, 5.6vw, 5rem);
+
+  /* spacing 4/8 scale */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 40px; --s-7: 64px; --s-8: 96px; --s-9: 144px;
+  --space: 20px;                 /* page gutter, used by .container */
+  --container: 1280px;
+  --gap: 24px;
+  --header-h: 56px;
+
+  /* shape and motion */
+  --radius: 4px;
+  --skew: 18deg;                 /* logo angle: frames, markers, line ends only */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur: 420ms;
+  --dur-fast: 120ms;
+  --dur-mid: 220ms;
+}
+@media (min-width: 768px) { :root { --space: 40px; } }
+@media (min-width: 1100px) { :root { --space: 80px; --header-h: 72px; } }

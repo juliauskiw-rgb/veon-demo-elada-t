@@ -1,0 +1,16 @@
+---
+import Icon from "./Icon.astro";
+import { PHONE, EMAIL } from "../data/site";
+---
+<div class="callbar" id="callbar" data-rec="R-002,G-R002">
+  <a class="btn btn--primary" href={PHONE.href}><Icon name="phone" size={20} /> Подзвонити</a>
+  <a class="btn btn--outline" href={`mailto:${EMAIL}`}><Icon name="mail" size={20} /> E-mail</a>
+</div>
+<style>
+  .callbar { display: none; }
+  @media (max-width: 767px) {
+    .callbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s-2); padding: var(--s-2) var(--space) calc(var(--s-2) + env(safe-area-inset-bottom)); background: var(--color-bg); border-top: 1px solid var(--color-line); transition: transform var(--dur) var(--ease-out); }
+    :global(.js) .callbar:not(.is-on) { transform: translateY(110%); }
+    .callbar .btn { min-height: 52px; padding-inline: var(--s-3); }
+  }
+</style>

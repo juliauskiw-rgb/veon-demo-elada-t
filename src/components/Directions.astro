@@ -1,0 +1,87 @@
+---
+import Section from "./Section.astro";
+import FutureLink from "./FutureLink.astro";
+import Icon from "./Icon.astro";
+import { PIPES, PHONE, FUTURE_NOTE } from "../data/site";
+---
+<Section id="napryamy" rec="R-003" class="block dirs">
+  <div class="container">
+    <h2 class="block__title" data-reveal>Сім систем будинку — один підрядник</h2>
+    {PIPES.map((p) => (
+      <div class:list={["pipe", `pipe--${p.pipe}`]} data-reveal>
+        {p.groups.map((g) => (
+          <div class="group">
+            <p class="group__name">{g.name}</p>
+            <div class="group__rows">
+              {g.dirs.map((d) => (
+                <details class="dir" open>
+                  <summary class="dir__sum">
+                    <h3 class="dir__name">{d.name}</h3>
+                    <span class="dir__toggle" aria-hidden="true"><Icon name="plus" size={20} /></span>
+                  </summary>
+                  <div class="dir__body">
+                    <p class="dir__what">
+                      <span class="dir__items">{d.items}</span>
+                      {d.brands && <span class="dir__brands">{d.brands}</span>}
+                    </p>
+                    <p class="dir__actions">
+                      <FutureLink note={FUTURE_NOTE} class="dir__more link future-link--end">Детальніше <Icon name="arrow" size={18} /></FutureLink>
+                      <a class="dir__call" href={PHONE.href}><Icon name="phone" size={18} /> Подзвонити</a>
+                    </p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</Section>
+<style>
+  .pipe { --pipe: var(--color-hot); position: relative; padding-left: 36px; }
+  .pipe--cold { --pipe: var(--color-cold); }
+  .pipe::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--pipe); }
+  .pipe + .pipe { margin-top: var(--s-7); }
+  .group + .group { margin-top: var(--s-6); }
+  .group__name { margin: 0 0 var(--s-2); font: 700 var(--fs-3) / 1.1 var(--font-display); letter-spacing: -.02em; }
+
+  .dir { position: relative; border-top: 1px solid var(--color-line); }
+  .dir:last-child { border-bottom: 1px solid var(--color-line); }
+  .dir + .dir { border-top: 1px solid var(--color-line); }
+  .dir::before { content: ""; position: absolute; left: -36px; top: 22px; width: 24px; height: 12px; background: var(--pipe); transform-origin: left center; clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%); transition: transform var(--dur-mid) var(--ease-out); }
+  .dir__sum { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); min-height: 56px; padding-block: var(--s-3); list-style: none; cursor: pointer; }
+  .dir__sum::-webkit-details-marker { display: none; }
+  .dir__name { margin: 0; font: 700 var(--fs-1) / 1.2 var(--font-display); letter-spacing: -.01em; }
+  .dir__toggle { display: inline-grid; place-items: center; width: 48px; height: 48px; flex: none; transition: transform var(--dur-mid) var(--ease-out); }
+  .dir[open] .dir__toggle { transform: rotate(45deg); }
+  .dir__body { padding-bottom: var(--s-4); }
+  .dir__what { margin: 0 0 var(--s-3); display: grid; gap: var(--s-1); }
+  .dir__brands { font-weight: 600; color: var(--color-muted); }
+  .dir__actions { margin: 0; display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); }
+  .dir__actions :global(.dir__more), .dir__call { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 48px; font-weight: 600; }
+  .dir__call { color: var(--color-text); text-decoration: none; border-bottom: 2px solid var(--color-hot); align-self: center; min-height: 0; padding-block: 2px; transition: transform var(--dur-fast); }
+  .dir__call:active { transform: translateY(1px); }
+  .dir__call:hover { color: var(--color-hot); }
+  .dir__actions :global(.dir__more) { text-decoration: none; }
+  .dir__actions :global(.dir__more .icon) { color: var(--color-cold); }
+  .dir:hover::before, .dir:focus-within::before { transform: scaleX(1.35); }
+
+  @media (min-width: 768px) { .pipe { padding-left: var(--s-6); } .dir::before { left: calc(-1 * var(--s-6)); width: 32px; } }
+  @media (min-width: 1100px) {
+    .pipe { padding-left: var(--s-7); }
+    .dir::before { left: calc(-1 * var(--s-7)); width: 40px; top: 36px; }
+    .group { display: grid; grid-template-columns: 220px minmax(0, 1fr); column-gap: var(--gap); align-items: start; }
+    .group__name { position: sticky; top: calc(var(--header-h) + var(--s-5)); font-size: var(--fs-3); padding-top: var(--s-4); }
+    .dir { padding-left: 34%; }
+    .dir__sum { position: absolute; left: 0; top: 0; width: 32%; min-height: 0; padding-block: var(--s-5); pointer-events: none; }
+    .dir__name { font-size: 1.625rem; }
+    .dir__toggle { display: none; }
+    .dir__body { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-5); align-items: start; padding-block: var(--s-5); }
+    .dir__what { margin: 0; padding-top: 8px; }
+    .dir__actions { flex-direction: column; align-items: flex-start; gap: var(--s-3); }
+    .dir__actions :global(.dir__more), .dir__call { min-height: 0; }
+    .dir__actions :global(.dir__more) { padding-block: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .dir:hover::before, .dir:focus-within::before { transform: none; } }
+</style>

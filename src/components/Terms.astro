@@ -1,0 +1,48 @@
+---
+import Section from "./Section.astro";
+import Icon from "./Icon.astro";
+import { PHONE } from "../data/site";
+---
+<Section id="umovy" class="block well terms">
+  <div class="container">
+    <h2 class="block__title" data-reveal>З ПДВ, актами і гарантією</h2>
+    <div class="cols">
+      <div class="col" data-reveal>
+        <h3>Гарантія</h3>
+        <ul>
+          <li>Гарантія на монтажні роботи.</li>
+          <li>На обладнання — гарантія виробника.</li>
+          <li>Ліцензія на виконання робіт.</li>
+          <li>Післягарантійне обслуговування і ремонт.</li>
+        </ul>
+      </div>
+      <div class="col" data-reveal style="--reveal-delay:80ms">
+        <h3>Оплата і документи</h3>
+        <ul>
+          <li>Готівкою, безготівково, карткою.</li>
+          <li><strong>Працюємо з ПДВ.</strong></li>
+          <li><strong>Акти виконаних робіт.</strong></li>
+        </ul>
+      </div>
+      <div class="col" data-reveal style="--reveal-delay:160ms">
+        <h3>Доставка</h3>
+        <ul>
+          <li><strong>По області — безкоштовно.</strong></li>
+          <li>По Україні — накладеним платежем: Нова Пошта, Ін-Тайм, Meest Express.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="terms__end"><a class="btn btn--outline" href={PHONE.href}><Icon name="phone" size={22} /> Подзвонити <span class="nw">{PHONE.display}</span></a></p>
+  </div>
+</Section>
+<style>
+  .cols { display: grid; gap: var(--s-6); }
+  .col h3 { margin: 0 0 var(--s-4); font: 700 var(--fs-2) / 1.15 var(--font-display); letter-spacing: -.01em; }
+  .col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s-3); max-width: 34ch; }
+  .col li { padding-left: var(--s-5); position: relative; }
+  .col li::before { content: ""; position: absolute; left: 0; top: .55em; width: 12px; height: 8px; background: var(--color-cold); clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%); }
+  .nw { white-space: nowrap; }
+  .terms__end { margin: var(--s-7) 0 0; }
+  @media (max-width: 767px) { .terms__end .btn { width: 100%; } }
+  @media (min-width: 1100px) { .cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); } .col { padding-right: var(--s-5); } }
+</style>

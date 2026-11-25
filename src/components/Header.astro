@@ -1,0 +1,89 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import { NAV, PHONES, PHONE, EMAIL } from "../data/site";
+---
+<header class="site-header" id="site-header">
+  <div class="container site-header__bar">
+    <a class="site-header__logo" href="#top" aria-label="ЕЛАДА-Т, на початок сторінки"><Logo /></a>
+    <nav class="nav" aria-label="Основна навігація" data-spy>
+      <ul>
+        {NAV.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <a class="header-phone" href={PHONE.href} data-rec="R-002,G-R002">
+      <Icon name="phone" size={22} />
+      <span class="header-phone__num"><span class="visually-hidden">Подзвонити: </span>{PHONE.display}</span>
+      <span class="visually-hidden header-phone__sr">Подзвонити {PHONE.display}</span>
+    </a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="menu-btn__icon" aria-hidden="true"><i></i><i></i></span>
+      <span class="menu-btn__text">Меню</span>
+    </button>
+  </div>
+  <div class="menu" id="menu">
+    <div class="container menu__inner">
+      <nav aria-label="Меню розділів" data-spy>
+        <ul class="menu__list">
+          {NAV.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+      <div class="menu__contacts">
+        {PHONES.map((p) => <a href={p.href}>{p.display}</a>)}
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      </div>
+    </div>
+  </div>
+</header>
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--color-bg); border-bottom: 1px solid var(--color-line); }
+  .site-header__bar { display: flex; align-items: center; gap: var(--s-4); height: var(--header-h); }
+  .site-header__logo { flex: none; display: inline-flex; margin-right: auto; text-decoration: none; min-height: 44px; align-items: center; }
+  .nav { display: none; }
+  .nav ul { display: flex; gap: var(--s-5); list-style: none; margin: 0; padding: 0; }
+  .nav a { position: relative; display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; text-decoration: none; color: var(--color-text); font-size: 1rem; }
+  .nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 2px; background: var(--color-cold); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-mid) var(--ease-out); }
+  .nav a:hover, .nav a[aria-current] { color: var(--color-cold); }
+  .nav a:hover::after, .nav a[aria-current]::after { transform: scaleX(1); }
+
+  .header-phone { display: inline-flex; align-items: center; justify-content: center; gap: var(--s-3); min-width: 44px; min-height: 44px; border: 2px solid var(--color-text); border-radius: var(--radius); color: var(--color-text); text-decoration: none; font-family: var(--font-display); font-weight: 700; transition: background-color var(--dur-fast), transform var(--dur-fast); }
+  .header-phone :global(.icon) { color: var(--color-hot); }
+  .header-phone:hover { background: var(--color-bg-2); }
+  .header-phone:active { transform: translateY(1px); }
+  .header-phone__num { display: none; white-space: nowrap; font-size: 1.125rem; letter-spacing: -.01em; }
+
+  .menu-btn { flex: none; display: none; align-items: center; gap: var(--s-2); min-height: 44px; padding: 0 var(--s-3); border: 2px solid transparent; border-radius: var(--radius); background: none; color: var(--color-text); font: 600 1rem var(--font-body); cursor: pointer; }
+  :global(.js) .menu-btn { display: inline-flex; }
+  .menu-btn:hover { background: var(--color-bg-2); }
+  .menu-btn:active { transform: translateY(1px); }
+  .menu-btn__icon { position: relative; width: 22px; height: 14px; }
+  .menu-btn__icon i { position: absolute; left: 0; right: 0; height: 2px; background: currentColor; transition: transform var(--dur-mid) var(--ease-out); }
+  .menu-btn__icon i:first-child { top: 2px; }
+  .menu-btn__icon i:last-child { bottom: 2px; }
+  [data-menu-open] .menu-btn__icon i:first-child { transform: translateY(4px) rotate(45deg); }
+  [data-menu-open] .menu-btn__icon i:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+  .menu { display: none; }
+  :global(.js) .menu { display: block; position: fixed; inset: var(--header-h) 0 0 0; background: var(--color-bg); overflow-y: auto; visibility: hidden; opacity: 0; transition: opacity var(--dur-mid) var(--ease-out), visibility 0s linear var(--dur-mid); }
+  [data-menu-open] .menu { visibility: visible; opacity: 1; transition-delay: 0s; }
+  .menu__inner { padding-block: var(--s-5) var(--s-7); display: grid; gap: var(--s-6); }
+  .menu__list { list-style: none; margin: 0; padding: 0; }
+  .menu__list a { display: flex; align-items: center; min-height: 56px; border-bottom: 1px solid var(--color-line); font: 700 var(--fs-2) var(--font-display); letter-spacing: -.01em; text-decoration: none; color: var(--color-text); }
+  .menu__list a[aria-current] { color: var(--color-cold); }
+  .menu__contacts { display: grid; gap: var(--s-1); }
+  .menu__contacts a { display: flex; align-items: center; min-height: 48px; font-weight: 600; font-size: var(--fs-1); color: var(--color-text); text-decoration: none; }
+
+  @media (min-width: 768px) {
+    .header-phone { padding-inline: var(--s-4); }
+    .header-phone__num { display: inline; }
+    .header-phone__sr { display: none; }
+  }
+  @media (min-width: 1100px) {
+    .nav { display: block; margin-inline: auto; }
+    :global(.js) .menu-btn, :global(.js) .menu { display: none; }
+    .site-header__logo { margin-right: 0; }
+    .header-phone { border-color: transparent; padding-inline: 0; }
+    .header-phone__num { font-size: 1.3125rem; }
+    .header-phone:hover { background: none; color: var(--color-cold); }
+  }
+</style>

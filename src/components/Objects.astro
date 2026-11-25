@@ -1,0 +1,77 @@
+---
+import Section from "./Section.astro";
+import FutureLink from "./FutureLink.astro";
+import Icon from "./Icon.astro";
+import ObjectPhoto from "./ObjectPhoto.astro";
+import { OBJECTS, FUTURE_NOTE } from "../data/site";
+const cap = (o: (typeof OBJECTS)[number]) => (o.place ? `${o.type}, ${o.place}` : o.type);
+const [porsche, hotel, house, flat, pump, sewage] = OBJECTS;
+// Layout order: landscape photos in the wide cells, portrait ones (flat, sewage) in the tall cells.
+const tall1 = flat, tall2 = sewage, wide1 = house, wide2 = pump;
+---
+<Section id="obiekty" rec="R-005" class="block objects">
+  <div class="container">
+    <h2 class="block__title" data-reveal>Від квартири на Буйка до Porsche</h2>
+    <div class="grid">
+      <figure class="obj obj--a" data-reveal>
+        <div class="obj__media"><ObjectPhoto slug={porsche.slug} alt={cap(porsche)} tile={porsche.tile} sizes="(min-width: 1100px) 58vw, 100vw" /></div>
+        <figcaption>{cap(porsche)}</figcaption>
+      </figure>
+      <figure class="obj obj--b" data-reveal style="--reveal-delay:80ms">
+        <div class="obj__media"><ObjectPhoto slug={hotel.slug} alt={cap(hotel)} tile={hotel.tile} sizes="(min-width: 1100px) 42vw, 100vw" /></div>
+        <figcaption>{cap(hotel)}</figcaption>
+      </figure>
+      <figure class="obj obj--c" data-reveal>
+        <div class="obj__media"><ObjectPhoto slug={tall1.slug} alt={cap(tall1)} tile={tall1.tile} sizes="(min-width: 1100px) 33vw, 50vw" /></div>
+        <figcaption>{cap(tall1)}</figcaption>
+      </figure>
+      <figure class="obj obj--d" data-reveal style="--reveal-delay:80ms">
+        <div class="obj__media"><ObjectPhoto slug={tall2.slug} alt={cap(tall2)} tile={tall2.tile} sizes="(min-width: 1100px) 33vw, 50vw" /></div>
+        <figcaption>{cap(tall2)}</figcaption>
+      </figure>
+      <div class="obj__stack">
+        <figure class="obj obj--e" data-reveal style="--reveal-delay:160ms">
+          <div class="obj__media"><ObjectPhoto slug={wide1.slug} alt={cap(wide1)} tile={wide1.tile} sizes="(min-width: 1100px) 33vw, 50vw" /></div>
+          <figcaption>{cap(wide1)}</figcaption>
+        </figure>
+        <figure class="obj obj--f" data-reveal style="--reveal-delay:240ms">
+          <div class="obj__media"><ObjectPhoto slug={wide2.slug} alt={cap(wide2)} tile={wide2.tile} sizes="(min-width: 1100px) 33vw, 50vw" /></div>
+          <figcaption>{cap(wide2)}</figcaption>
+        </figure>
+      </div>
+    </div>
+    <p class="objects__all">
+      <FutureLink note={FUTURE_NOTE} class="link objects__link">Усі об'єкти <Icon name="arrow" size={20} /></FutureLink>
+    </p>
+  </div>
+</Section>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5) var(--s-4); }
+  .obj { margin: 0; display: flex; flex-direction: column; gap: var(--s-2); min-width: 0; }
+  .obj__media { position: relative; flex: 1; min-height: 160px; aspect-ratio: 3 / 4; overflow: hidden; background: var(--color-bg-2); }
+  .obj--a, .obj--b { grid-column: 1 / -1; }
+  .obj--a .obj__media, .obj--b .obj__media { aspect-ratio: 4 / 3; }
+  .obj__stack { display: contents; }
+  .obj--e .obj__media, .obj--f .obj__media { aspect-ratio: 4 / 3; }
+  figcaption { font-weight: 600; font-size: .9375rem; line-height: 1.3; }
+  .objects__all { margin: var(--s-6) 0 0; }
+  .objects__all :global(.objects__link) { min-height: 48px; gap: var(--s-2); text-decoration: none; }
+
+  @media (min-width: 768px) {
+    .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--s-6) var(--gap); }
+    .obj--a { grid-column: span 4; } .obj--b { grid-column: span 2; }
+    .obj--c, .obj--d { grid-column: span 3; }
+    .obj__stack { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+    .obj--a .obj__media, .obj--b .obj__media { aspect-ratio: auto; height: 380px; flex: none; }
+    .obj--c .obj__media, .obj--d .obj__media { aspect-ratio: 3 / 4; }
+  }
+  @media (min-width: 1100px) {
+    .grid { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: stretch; }
+    .obj--a { grid-column: span 7; } .obj--b { grid-column: span 5; }
+    .obj--a .obj__media, .obj--b .obj__media { height: 440px; }
+    .obj--c, .obj--d { grid-column: span 4; }
+    .obj__stack { grid-column: span 4; grid-template-columns: none; grid-template-rows: 1fr 1fr; }
+    .obj--c .obj__media, .obj--d .obj__media { aspect-ratio: 3 / 4; }
+    .obj--e .obj__media, .obj--f .obj__media { aspect-ratio: auto; min-height: 0; }
+  }
+</style>

@@ -1,0 +1,60 @@
+{
+  "avtosalon": {
+    "file": "avtosalon.jpg",
+    "width": 1200,
+    "height": 461,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "budynok-lviv": {
+    "file": "budynok-lviv.jpg",
+    "width": 1200,
+    "height": 900,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "hotel-truskavets": {
+    "file": "hotel-truskavets.jpg",
+    "width": 1200,
+    "height": 800,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "kvartyra-novobudova": {
+    "file": "kvartyra-novobudova.jpg",
+    "width": 768,
+    "height": 1024,
+    "widths": [
+      480,
+      768
+    ]
+  },
+  "ochysni-konopnytsia": {
+    "file": "ochysni-konopnytsia.jpg",
+    "width": 720,
+    "height": 960,
+    "widths": [
+      480,
+      720
+    ]
+  },
+  "teplovyi-nasos-buisk": {
+    "file": "teplovyi-nasos-buisk.jpg",
+    "width": 960,
+    "height": 640,
+    "widths": [
+      480,
+      800,
+      960
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+---
+// Client logo (original PNG 262x41, public/img/logo-elada.png). Shown at most at its natural size.
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+<img class="logo" src={`${base}/img/logo-elada.png`} width="262" height="41" alt="ЕЛАДА-Т" decoding="async" />
+<style>
+  .logo { display: block; width: 262px; max-width: 100%; height: auto; }
+  @media (max-width: 767px) { .logo { width: 168px; } }
+</style>

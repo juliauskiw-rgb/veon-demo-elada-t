@@ -1,0 +1,63 @@
+---
+import Section from "./Section.astro";
+import Icon from "./Icon.astro";
+import { PHONE } from "../data/site";
+const steps = [
+  { t: "Консультація і теплотехнічний розрахунок", free: "безкоштовно", d: "Розбираємо, що потрібно будинку чи об'єкту, і рахуємо потужність, щоб не платити за зайве." },
+  { t: "Проєкт", d: "Проєктуємо систему під ваш об'єкт." },
+  { t: "Обладнання і доставка на об'єкт", free: "безкоштовно по області", d: "Постачаємо обладнання і привозимо матеріали на об'єкт." },
+  { t: "Монтаж", d: "Власна команда з власним інструментом і автотранспортом." },
+  { t: "Гарантія і сервіс", d: "Гарантія на монтажні роботи, післягарантійне обслуговування і ремонт." },
+];
+---
+<Section id="yak-pratsiuiemo" rec="R-006" class="block process">
+  <div class="container">
+    <h2 class="block__title" data-reveal>Спершу розрахунок — безкоштовно</h2>
+    <ol class="steps" data-line>
+      {steps.map((s, i) => (
+        <li class="step" style={`--i:${i}`}>
+          <span class="step__node" aria-hidden="true"></span>
+          <h3 class="step__t">{s.t}</h3>
+          <p class="step__d">
+            {s.free && <strong class="step__free">{s.free}. </strong>}{s.d}
+          </p>
+        </li>
+      ))}
+    </ol>
+    <div class="process__end" data-reveal>
+      <p class="process__lead">Почати з розрахунку: подзвоніть.</p>
+      <a class="btn btn--outline" href={PHONE.href}><Icon name="phone" size={22} /> Подзвонити <span class="nw">{PHONE.display}</span></a>
+    </div>
+  </div>
+</Section>
+<style>
+  .steps { --seg-dur: 180ms; list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-6); }
+  .step { --c: var(--color-hot); position: relative; padding-left: var(--s-6); }
+  .step:last-child { --c: var(--color-cold); }
+  /* line segment from this node to the next (vertical on phone) */
+  .step::before { content: ""; position: absolute; left: 10px; top: 10px; width: 4px; height: calc(100% + var(--s-6)); background: var(--c); transform-origin: top; transition: transform var(--seg-dur) linear; transition-delay: calc(var(--i) * var(--seg-dur)); }
+  .step:last-child::before { height: calc(100% - 10px); }
+  .step__node { position: absolute; left: 0; top: 0; width: 24px; height: 16px; background: var(--c); clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%); z-index: 1; }
+  :global(.js) .steps:not(.is-visible) .step::before { transform: scaleY(0); }
+  .step__t { margin: 0 0 var(--s-2); font: 700 var(--fs-1) / 1.2 var(--font-display); letter-spacing: -.01em; }
+  .step__d { margin: 0; max-width: 34ch; }
+  .step__free { font-weight: 600; color: var(--color-text); }
+  .nw { white-space: nowrap; }
+  .process__end { margin-top: var(--s-7); display: grid; gap: var(--s-4); justify-items: start; }
+  .process__lead { margin: 0; font: 700 var(--fs-2) / 1.15 var(--font-display); letter-spacing: -.01em; }
+  @media (max-width: 767px) { .process__end .btn { width: 100%; } }
+
+  @media (min-width: 1100px) {
+    .steps { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gap); }
+    .step { padding: var(--s-6) 0 0; }
+    .step::before { left: 0; top: 6px; width: calc(100% + var(--gap)); height: 4px; transform-origin: left; }
+    .step:last-child::before { width: 60%; height: 4px; }
+    :global(.js) .steps:not(.is-visible) .step::before { transform: scaleX(0); }
+    .step__node { top: 0; }
+    .step__t { font-size: 1.375rem; }
+    .process__end { grid-template-columns: auto auto; justify-content: start; align-items: center; gap: var(--s-6); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .steps:not(.is-visible) .step::before { transform: none; }
+  }
+</style>

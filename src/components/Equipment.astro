@@ -1,0 +1,43 @@
+---
+import Section from "./Section.astro";
+import FutureLink from "./FutureLink.astro";
+import Icon from "./Icon.astro";
+import { BRANDS, CATEGORIES, PHONE, FUTURE_NOTE } from "../data/site";
+---
+<Section id="obladnannia" rec="R-007" class="block well equipment">
+  <div class="container equipment__grid">
+    <div class="equipment__head">
+      <h2 class="block__title" data-reveal>Підберемо модель під ваш об'єкт</h2>
+      <p class="equipment__brands" data-reveal>
+        {BRANDS.map((b, i) => <><span>{b}</span>{i < BRANDS.length - 1 ? " " : ""}</>)}<span class="equipment__etc"> та ін.</span>
+      </p>
+      <p class="equipment__lead" data-reveal>Підбираємо обладнання під розрахунок — консультація безкоштовна.</p>
+      <a class="btn btn--primary" href={PHONE.href}><Icon name="phone" size={22} /> Підібрати по телефону</a>
+    </div>
+    <ul class="equipment__list" data-reveal>
+      {CATEGORIES.map((c) => (
+        <li><FutureLink note={FUTURE_NOTE} class="equipment__cat">{c} <Icon name="arrow" size={18} /></FutureLink></li>
+      ))}
+    </ul>
+  </div>
+</Section>
+<style>
+  .equipment__grid { display: grid; gap: var(--s-6); }
+  .equipment__brands { margin: 0 0 var(--s-4); font: 700 var(--fs-2) / 1.3 var(--font-display); letter-spacing: -.01em; display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); }
+  .equipment__etc { color: var(--color-muted); }
+  .equipment__lead { margin: 0 0 var(--s-5); max-width: 32ch; }
+  .equipment__list { list-style: none; margin: 0; padding: 0; display: grid; }
+  .equipment__list li { border-top: 1px solid var(--color-line); }
+  .equipment__list li:last-child { border-bottom: 1px solid var(--color-line); }
+  .equipment__list :global(.equipment__cat) { display: flex; width: 100%; justify-content: space-between; min-height: 56px; font-weight: 600; font-size: var(--fs-1); }
+  .equipment__list :global(.equipment__cat .icon) { color: var(--color-cold); }
+  :global(.equipment) .btn { width: 100%; }
+  @media (min-width: 768px) { :global(.equipment) .btn { width: auto; } .equipment__list { grid-template-columns: 1fr 1fr; column-gap: var(--gap); } .equipment__list li:nth-last-child(2) { border-bottom: 1px solid var(--color-line); } }
+  @media (min-width: 1100px) {
+    .equipment__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: start; }
+    .equipment__head { grid-column: 1 / span 6; }
+    .equipment__list { grid-column: 8 / -1; grid-template-columns: 1fr; }
+    .equipment__list li:nth-last-child(2) { border-bottom: 0; }
+    .equipment__brands { font-size: var(--fs-2); }
+  }
+</style>

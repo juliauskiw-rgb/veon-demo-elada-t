@@ -1,0 +1,49 @@
+---
+import "@fontsource-variable/geologica/slnt.css";
+import "@fontsource-variable/golos-text/wght.css";
+import geoUrl from "@fontsource-variable/geologica/files/geologica-cyrillic-slnt-normal.woff2?url";
+import golosUrl from "@fontsource-variable/golos-text/files/golos-text-cyrillic-wght-normal.woff2?url";
+import "../styles/tokens.css";
+import "../styles/global.css";
+
+interface Props { lang: string; title: string; description: string; canonical?: string; }
+const { lang, title, description, canonical } = Astro.props;
+const favicon =
+  "data:image/svg+xml," +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#B3202E" d="M9 4h12l-6 24H3z"/><path fill="#2D5BB5" d="M23 4h7l-6 24h-7z"/></svg>'
+  );
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add("js")</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preload" as="font" type="font/woff2" href={geoUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={golosUrl} crossorigin />
+    <meta name="theme-color" content="#F3F4F1" />
+    <link rel="icon" href={favicon} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="uk_UA" />
+    <meta name="robots" content="noindex" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{lang.startsWith("uk") ? "До змісту" : lang.startsWith("ru") ? "К содержанию" : "Skip to content"}</a>
+    <slot name="header" />
+    <main id="main"><slot /></main>
+    <slot name="footer" />
+    <script src="../scripts/reveal.ts"></script>
+    <script src="../scripts/nav.ts"></script>
+  </body>
+</html>
+
+<style is:global>
+  html, body { overflow-x: clip; }
+</style>
